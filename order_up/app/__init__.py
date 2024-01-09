@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_login import LoginManager
-from .routes import bp
+from app.routes.orders import orders
+from app.routes.session import session
 from .config import Config
 from .models import db, Employee
 
+
 flask_app = Flask(__name__)
 flask_app.config.from_object(Config)
-flask_app.register_blueprint(bp)
+flask_app.register_blueprint(orders)
+flask_app.register_blueprint(session)
 
 db.init_app(flask_app)
 
