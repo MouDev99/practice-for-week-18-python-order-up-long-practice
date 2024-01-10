@@ -7,6 +7,7 @@ session = Blueprint("session", __name__, url_prefix="/session")
 
 @session.route("/", methods=["GET", "POST"])
 def login():
+    print(current_user.is_authenticated)
     if current_user.is_authenticated:
         return redirect(url_for("orders.index"))
     form = LoginForm()

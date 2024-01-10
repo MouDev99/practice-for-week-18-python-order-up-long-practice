@@ -5,7 +5,6 @@ from app.routes.session import session
 from .config import Config
 from .models import db, Employee
 
-
 flask_app = Flask(__name__)
 flask_app.config.from_object(Config)
 flask_app.register_blueprint(orders)
