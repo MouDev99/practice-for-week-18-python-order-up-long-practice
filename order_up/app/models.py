@@ -30,11 +30,11 @@ class Menu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
 
-    items = db.relationship("MenuItem", back_populates="menu")
+    items = db.relationship("MenuItem", back_populates="menu", cascade="all, delete-orphan")
 
 
 class MenuItem(db.Model):
-    __tablename__ = "menus_items"
+    __tablename__ = "menu_items"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -52,7 +52,7 @@ class MenuItemType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
 
-    menu_item = db.relationship("MenuItem", back_populates="type")
+    menu_item = db.relationship("MenuItem", back_populates="type", cascade="all, delete-orphan")
 
 
 class Table(db.Model):
