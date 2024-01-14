@@ -1,5 +1,99 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Order Up!</h1>
+<div class="header__container">
+  <form class="assign__table__form">
+    <h2>Assign table</h2>
+    <select name="open__tables" id="table-select" required>
+      <option value="" disabled selected>--Open tables--</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+    </select>
+    <select name="servers" id="servers-select" required>
+      <option value="" disabled selected>--Servers--</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+    </select>
+    <button type="submit">Assign</button>
+  </form>
+  <form class="logout__form" method="POST" action="{{ url_for('session.logout') }}">
+    <button type="submit">Logout</button>
+  </form>
+</div>
+<div class="main__container">
+  <div class="open__orders__container">
+    <h2>Your open orders</h2>
+    <div class="order">
+      <span>Table 8</span>
+      <span>$45</span>
+      <form>
+        <button type="submit">Close Table</button>
+      </form>
+      <form>
+        <button type="submit">Add to order</button>
+      </form>
+    </div>
+    <div class="order">
+      <span>Table 8</span>
+      <span>$45</span>
+      <form>
+        <button type="submit">Close Table</button>
+      </form>
+      <form>
+        <button type="submit">Add to order</button>
+      </form>
+    </div>
+    <div class="order">
+      <span>Table 8</span>
+      <span>$45</span>
+      <form>
+        <button type="submit">Close Table</button>
+      </form>
+      <form>
+        <button type="submit">Add to order</button>
+      </form>
+    </div>
+  </div>
+  <div>
+    <div class="food_type_container">
+        <h2>Entrees</h2>
+        <div class="food__items__container">
+          <div>
+            <input type="checkbox" id="Chicken Kiev" name="Chicken Kiev" checked/>
+            <label for="Chicken Kiev">Chicken Kiev</label>
+          </div>
+          <div>
+            <input type="checkbox" id="Eggplant Parmesan" name="Eggplant Parmesan"/>
+            <label for="Eggplant Parmesan">Eggplant Parmesan</label>
+          </div>
+        </div>
+    </div>
+    <div class="food_type_container">
+        <h2>Sides</h2>
+        <div class="food__items__container">
+          <div>
+            <input type="checkbox" id="Chicken Kiev" name="Chicken Kiev" checked/>
+            <label for="Chicken Kiev">Chicken Kiev</label>
+          </div>
+          <div>
+            <input type="checkbox" id="Eggplant Parmesan" name="Eggplant Parmesan"/>
+            <label for="Eggplant Parmesan">Eggplant Parmesan</label>
+          </div>
+        </div>
+    </div>
+    <div class="food_type_container">
+        <h2>Beverages</h2>
+        <div class="food__items__container">
+          <div>
+            <input type="checkbox" id="Chicken Kiev" name="Chicken Kiev" checked/>
+            <label for="Chicken Kiev">Chicken Kiev</label>
+          </div>
+          <div>
+            <input type="checkbox" id="Eggplant Parmesan" name="Eggplant Parmesan"/>
+            <label for="Eggplant Parmesan">Eggplant Parmesan</label>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
