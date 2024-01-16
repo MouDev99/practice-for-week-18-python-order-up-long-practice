@@ -24,6 +24,7 @@ def index():
                            menu_items=menu_items)
 
 @orders.route("/assign", methods=["POST"])
+@login_required
 def assign_table():
     table_assignment_form = TableAssignmentForm()
     table_id = table_assignment_form.tables.data
@@ -42,6 +43,7 @@ def assign_table():
 
 
 @orders.route("/close/<int:order_id>", methods=["POST"])
+@login_required
 def close_table(order_id):
     order = Order.query.get(order_id)
     order.finished = True
