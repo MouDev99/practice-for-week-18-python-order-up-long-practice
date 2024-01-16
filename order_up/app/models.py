@@ -45,7 +45,7 @@ class MenuItem(db.Model):
     item_type_id = db.Column(db.Integer, db.ForeignKey("menu_item_types.id"))
 
     menu = db.relationship("Menu", back_populates="items")
-    type = db.relationship("MenuItemType", back_populates="menu_item")
+    type = db.relationship("MenuItemType", back_populates="menu_items")
     order_details = db.relationship("OrderDetail", back_populates="menu_item")
 
 
@@ -55,7 +55,7 @@ class MenuItemType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
 
-    menu_item = db.relationship("MenuItem", back_populates="type", cascade="all, delete-orphan")
+    menu_items = db.relationship("MenuItem", back_populates="type", cascade="all, delete-orphan")
 
 
 class Table(db.Model):
@@ -66,7 +66,6 @@ class Table(db.Model):
     capacity = db.Column(db.Integer, nullable=False)
 
     orders = db.relationship("Order", back_populates="table", cascade="all, delete-orphan")
-
 
 class Order(db.Model):
     __tablename__ = "orders"
@@ -80,6 +79,10 @@ class Order(db.Model):
     employee = db.relationship("Employee", back_populates="orders")
     order_details = db.relationship("OrderDetail", back_populates="order", cascade="all, delete-orphan")
 
+    @property
+    def total_price(self):
+        total_price = sum(detail.menu_item.price for detail in self.order_details)
+        return total_price
 
 class OrderDetail(db.Model):
     __tablename__ = "order_details"

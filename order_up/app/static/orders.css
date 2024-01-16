@@ -29,11 +29,7 @@
   font-weight: 400;
 }
 
-.logout__form {
-  display: flex;
-}
-
-.assign__table__form button,
+.assign__table__form input,
 .logout__form button {
   font-weight: 500;
   padding-inline: 1.5rem;
@@ -44,11 +40,15 @@
   text-transform: uppercase;
 }
 
-.assign__table__form > button {
+.assign__table__form > input {
   display: flex;
   justify-content: center;
   line-height: 1.4rem;
   background-color: rgb(41 127 208);
+}
+
+.logout__form {
+  display: flex;
 }
 
 .logout__form button {
@@ -98,8 +98,7 @@
 
 .food_type_container h2 {
   text-transform: uppercase;
-  font-weight: bolder;
-  font-size: 20px;
+  font-size: 2rem;
   margin-bottom: .6rem;
 }
 
