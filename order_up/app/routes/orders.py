@@ -1,8 +1,9 @@
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 from ..utils.get_data import get_menu_items, get_open_orders, \
    get_open_tables, get_servers
 from flask_login import login_required
-from app.models import db, Employee, Order, Table
+from app.models import db, Employee, MenuItem, Order, \
+      OrderDetail, Table
 from ..forms import TableAssignmentForm
 
 
@@ -31,7 +32,8 @@ def assign_table():
     server_id = table_assignment_form.servers.data
 
     if table_id is None or server_id is None:
-        return redirect(url_for("index"))
+        return redirect(url_for(".index"))
+
     table = Table.query.get(table_id)
     employee = Employee.query.get(server_id)
 
@@ -50,3 +52,17 @@ def close_table(order_id):
     db.session.add(order)
     db.session.commit()
     return redirect(url_for(".index"))
+
+@orders.route("/orders/<int:order_id>/items", methods=["POST"])
+@login_required
+def add_to_order(order_id):
+    order = Order.query.get(order_id)
+    selected_items_ids = request.form.getlist("menu_items")
+
+    for item_id in selected_items_ids:
+        menu_item = MenuItem.query.get(item_id)
+        order_details = OrderDetail(order=order, menu_item=menu_item)
+        db.session.add(order_details)
+    db.session.commit()
+
+    return redirect(url_for('.index'))

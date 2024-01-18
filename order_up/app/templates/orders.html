@@ -4,8 +4,22 @@
 <div class="header__container">
   <form class="assign__table__form" method="post" action="{{ url_for('.assign_table') }}">
     <h2>Assign table</h2>
-    {{ table_assignment_form.tables }}
-    {{ table_assignment_form.servers }}
+    <select name="tables" id="table_select" required>
+      {% for option in table_assignment_form.tables %}
+        {% if loop.first %}
+            <option value="" disabled selected>--Select a table--</option>
+        {% endif %}
+        {{ option }}
+      {% endfor %}
+    </select>
+    <select name="servers" id="server_select" required>
+      {% for option in table_assignment_form.servers %}
+        {% if loop.first %}
+            <option value="" disabled selected>--Select a server--</option>
+        {% endif %}
+        {{ option }}
+      {% endfor %}
+    </select>
     {{ table_assignment_form.assign }}
   </form>
   <form class="logout__form" method="POST" action="{{ url_for('session.logout') }}">
@@ -15,33 +29,55 @@
 <div class="main__container">
   <div class="open__orders__container">
     <h2>Your open orders</h2>
-    {% for (order_id, table_id, table_number, order_price) in open_orders%}
-      <div class="order">
-        <span>{{table_number}}</span>
-        <span>${{order_price}}</span>
-        <form method="POST" action="{{ url_for('orders.close_table', order_id=order_id)}}">
-          <button type="submit">Close Table</button>
-        </form>
-        <form>
-          <button type="submit">Add to order</button>
-        </form>
-      </div>
-    {% endfor %}
+    <table>
+      <thead>
+        <tr>
+          <th>Table number</th>
+          <th>Order price</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for (order_id, table_id, table_number, order_price) in open_orders %}
+          <tr>
+            <td>{{table_number}}</td>
+            <td>${{order_price}}</td>
+            <td>
+              <form method="POST" action="{{ url_for('orders.close_table', order_id=order_id)}}">
+                <button type="submit">Close Table</button>
+              </form>
+            </td>
+            <td>
+              <button
+                type="submit"
+                form="food_items"
+                formaction="{{ url_for('.add_to_order', order_id=order_id) }}"
+              >
+                Add to order
+              </button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <div>
-    {% for (item_type, item_details) in menu_items %}
+    <form method="POST" id="food_items">
+      {% for (item_type, item_details) in menu_items %}
       <div class="food_type_container">
         <h2>{{item_type}}</h2>
         <div class="food__items__container">
           {% for (item_id, item_name) in item_details %}
             <div>
-              <input type="checkbox" id="{{item_id}}" name="{{item_name}}" checked/>
+              <input type="checkbox" id="{{item_id}}" name="menu_items" value="{{item_id}}"/>
               <label for="{{item_id}}">{{item_name}}</label>
             </div>
           {% endfor %}
         </div>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </form>
   </div>
 </div>
 {% endblock %}
